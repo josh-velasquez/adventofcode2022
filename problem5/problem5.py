@@ -15,14 +15,11 @@ def getLettersFromRow(line):
 
 def processMoves(crates, move):
     splitMoves = move.split(" ")
-    
     numBox = int(splitMoves[1])
     start = int(splitMoves[3]) - 1
     end = int(splitMoves[5]) - 1
-    # print("BEFORE")
-    # print(crates)
+
     movedLetters = []
-    # grab the letters to move
     letterCounter = 0
     for i in range(len(crates)):
         if (numBox != letterCounter and crates[i][start] != None):
@@ -30,43 +27,18 @@ def processMoves(crates, move):
             movedLetters.append(letterToAppend)
             crates[i][start] = None
             letterCounter += 1
-    # print(movedLetters)
 
     # put the letters that is moved
-    # movedLetters = ['D', 'N', 'Z']
-    # crates =
-    # [[None, None, None], 
-    #  [None, None, None], 
-    #  [None, None, None], 
-    #  [None, None, None], 
-    #  [None, 'C', None], 
-    #  [None, 'M', 'P']]
-    print("BEFORE")
-    print(crates)
     for j in range((len(crates) - 1), -1, -1):
-        # print("J: " + str(j) + " LEN: " + str(len(movedLetters)))
         if ((crates[j][end] == None) and (len(movedLetters) != 0)):
             crates[j][end] = movedLetters.pop(0)
-    print("AFTER")
-    print(crates)
-    # crates =
-    # [[None, None, 'Z'], 
-    #  [None, None, 'Z'], 
-    #  [None, None, 'Z'], 
-    #  [None, None, 'N'], 
-    #  [None, 'C', 'D'], 
-    #  [None, 'M', 'P']]
-
-    # print("AFTER")
-    # print(crates)
-
     return crates
 
 def partOne():
     try:
-        file = open(os.getcwd() + "/problem5/sample.txt")
+        file = open(os.getcwd() + "/problem5/problem5.txt")
         lines = file.readlines()
-        crates = [] # sample dimension
+        crates = []
         movesList = []
         doneReadingCrates = False
         maxCrateHeight = 0
@@ -88,12 +60,28 @@ def partOne():
             else:
                 movesList.append(line.strip())
         
+        # crates = [
+        #     [None, 'D', None],
+        #     ['N', 'C', None],
+        #     ['Z', 'M', 'P']
+        # ]
+
+        crates = [
+            ['V', None, None, 'T', None, None, 'J', None, None],
+            ['Q', None, None, 'M', 'P', None, 'Q', None, 'J'],
+            ['W', 'B', None, 'N', 'Q', None, 'C', None, 'T'],
+            ['M', 'C', None, 'F', 'N', None, 'G', 'W', 'G'],
+            ['B', 'W', 'J', 'H', 'L', None, 'R', 'B', 'C'],
+            ['N', 'R', 'R', 'W', 'W', 'W', 'D', 'N', 'F'],
+            ['Z', 'Z', 'Q', 'S', 'F', 'P', 'B', 'Q', 'L'],
+            ['C', 'H', 'F', 'Z', 'G', 'L', 'V', 'Z', 'H']]
+
         # add extra rows (if all crates are stacked together)
+        originalCratesHeight = len(crates)
+        rowCount = len(crates[0])
         if (len(crates) != maxCrateHeight):
-            noneList = [None]*(len(crates[0]))
-            originalCratesHeight = len(crates)
             for i in range(maxCrateHeight - originalCratesHeight):
-                crates.insert(i, noneList)
+                crates.insert(i, [None]*(rowCount))
         
         # process moves list
         for move in movesList:
@@ -109,7 +97,14 @@ def partOne():
                 
         # remove excess rows
         del crates[:rowsToRemove]
-        # print(crates)
+        
+        
+        print(crates[len(crates) - 1])
+
+
+        # ['M', 'N', 'Z', 'T', 'B', 'B', 'V', 'H', 'P']
+        # ['C', 'H', 'F', 'Z', 'G', 'L', 'V', 'Z', 'H']
+
     except Exception as e:
         print("Error: " +  str(e))
 

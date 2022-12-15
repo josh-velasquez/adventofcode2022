@@ -11,10 +11,15 @@ def partTwo():
             firstStart, firstEnd = first.split("-")
             secondStart, secondEnd = second.split("-")
 
-            if (int(firstStart) <= int(secondStart) and int(secondStart) >= int(firstEnd) and int(firstEnd) >= int(secondEnd)):
-                containedCounter += 1
-            elif (int(secondStart) <= int(firstStart) and int(firstStart) >= int(secondEnd) and int(secondEnd) >= int(firstEnd)):
-                containedCounter += 1
+            if (int(firstStart) <= int(secondStart)):
+                if (int(firstEnd) >= int(secondEnd) or int(firstEnd) <= int(secondStart)):
+                    if (int(firstEnd) <= int(secondEnd) or int(secondEnd) <= int(firstEnd)):
+                        containedCounter += 1
+
+            elif (int(secondStart) <= int(firstStart)):
+                if (int(secondEnd) >= int(firstEnd) or int(secondStart) <= int(firstEnd)):
+                    if (int(secondEnd) <= int(firstEnd) or int(firstEnd) <= int(secondEnd)):
+                        containedCounter += 1
 
         print("TOTAL: " + str(containedCounter))
 
